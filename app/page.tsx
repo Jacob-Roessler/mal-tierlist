@@ -31,7 +31,7 @@ export default function Page() {
       return;
     }
     const data = await res.json();
-
+    console.log(data);
     setAnimeList(data);
     setLoading(false);
   };

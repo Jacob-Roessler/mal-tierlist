@@ -1,22 +1,36 @@
 import { NextResponse } from 'next/server';
-const malScraper = require('mal-scraper');
 
 export async function GET(request: Request) {
   const username = request.url.slice(request.url.lastIndexOf('/') + 1);
-  let after = 0;
-  const type = 'anime'; // can be either `anime` or `manga`
-  const status = 7; // All anime
-  let prev_data_length = -1;
   let data: Object[] = [];
-  while (data.length != prev_data_length) {
-    prev_data_length = data.length;
-    try {
-      let req = await malScraper.getWatchListFromUser(username, after, type, status);
-      data = [...data, ...req];
-      after += 300;
-    } catch (e) {
-      return NextResponse.json({}, { status: 404, statusText: 'invalid Username' });
+
+  try {
+    let req = await fetch(
+      `https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status&limit=1000`,
+      {
+        method: 'get',
+        headers: new Headers({
+          Authorization: process.env.MAL_TOKEN,
+          'Content-Type': 'application/json',
+        }),
+      }
+    );
+    let response = await req.json();
+    data = [...data, ...response.data];
+    while (response?.paging?.next) {
+      let req = await fetch(response.paging.next, {
+        method: 'get',
+        headers: new Headers({
+          Authorization: process.env.MAL_TOKEN,
+          'Content-Type': 'application/json',
+        }),
+      });
+      response = await req.json();
+      data = [...data, ...response.data];
     }
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json({}, { status: 404, statusText: 'invalid Username' });
   }
 
   return NextResponse.json(data);

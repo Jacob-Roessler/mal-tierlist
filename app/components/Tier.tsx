@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react';
 export default function Tier({ animeList }: { animeList: Object[] }) {
   let scores: { [key: string]: any[] } = {};
   animeList.forEach((anime: any) => {
-    scores[anime.score as keyof typeof scores]
-      ? scores[anime.score as keyof typeof scores].push(anime)
-      : (scores[anime.score as keyof typeof scores] = [anime]);
+    scores[anime.list_status.score as keyof typeof scores]
+      ? scores[anime.list_status.score as keyof typeof scores].push(anime)
+      : (scores[anime.list_status.score as keyof typeof scores] = [anime]);
   });
 
   const getCols = () => {
@@ -95,14 +95,14 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                   {scores[score].map((anime, index) => {
                     return (
                       <td
-                        key={anime?.animeId}
+                        key={anime?.node?.id}
                         className={`group w-auto h-auto bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600  ${
                           showUnscored && score === '0' ? 'hidden' : ''
                         }`}
                       >
                         <a
                           className="relative inline text-blue-200 text-xs flex text-center justify-center align-middle content-center  "
-                          href={'https://myanimelist.net' + anime?.animeUrl}
+                          href={'https://myanimelist.net/anime/' + anime?.node?.id}
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -111,7 +111,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                               scale > 20 && 'break-all'
                             }`}
                           >
-                            {anime?.animeTitle}
+                            {anime?.node?.title}
                             {score === '0' &&
                               ' - ' +
                                 [
@@ -125,7 +125,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                           </p>
                           <img
                             className="h-full group-hover:opacity-20 z-5"
-                            src={anime?.animeImagePath}
+                            src={anime?.node?.main_picture?.large}
                           ></img>
                         </a>
                       </td>
