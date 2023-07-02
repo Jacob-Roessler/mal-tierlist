@@ -101,7 +101,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                         }`}
                       >
                         <a
-                          className="relative inline text-blue-200 text-xs flex text-center justify-center align-middle content-center  "
+                          className="h-full w-auto relative inline text-blue-200 text-xs flex text-center justify-center align-middle content-center  "
                           href={'https://myanimelist.net/anime/' + anime?.node?.id}
                           target="_blank"
                           rel="noreferrer"
@@ -124,7 +124,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                                 ][anime?.status - 1]}
                           </p>
                           <img
-                            className="h-full group-hover:opacity-20 z-5"
+                            className="relative inline-block group-hover:opacity-20 z-5"
                             src={anime?.node?.main_picture?.large}
                           ></img>
                         </a>
