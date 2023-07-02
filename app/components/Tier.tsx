@@ -97,7 +97,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                       <td
                         key={anime?.node?.id}
                         className={`group w-auto h-auto bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600  ${
-                          showUnscored && score === '0' ? 'hidden' : ''
+                          score == '0' && !showUnscored ? 'hidden' : ''
                         }`}
                       >
                         <a
