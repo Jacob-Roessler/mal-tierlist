@@ -1,4 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = { basePath: '/github-pages' };
+const nextConfig = {};
 
 module.exports = nextConfig;
