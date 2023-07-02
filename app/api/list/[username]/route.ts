@@ -10,7 +10,7 @@ export async function GET(request: Request) {
       {
         method: 'get',
         headers: new Headers({
-          Authorization: process.env.MAL_TOKEN,
+          Authorization: process.env.MAL_TOKEN!,
           'Content-Type': 'application/json',
         }),
       }
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       let req = await fetch(response.paging.next, {
         method: 'get',
         headers: new Headers({
-          Authorization: process.env.MAL_TOKEN,
+          Authorization: process.env.MAL_TOKEN!,
           'Content-Type': 'application/json',
         }),
       });
