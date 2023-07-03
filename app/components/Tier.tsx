@@ -112,16 +112,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                             }`}
                           >
                             {anime?.node?.title}
-                            {score === '0' &&
-                              ' - ' +
-                                [
-                                  'Watching',
-                                  'Completed',
-                                  'Hold',
-                                  'Dropped',
-                                  'Re-Watching',
-                                  'Planning',
-                                ][anime?.status - 1]}
+                            {score === '0' && ' - ' + anime?.list_status.status}
                           </p>
                           <img
                             className="relative inline-block group-hover:opacity-20 z-5"
