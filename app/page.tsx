@@ -3,19 +3,18 @@ import { useState, useEffect } from 'react';
 import Tier from './components/Tier';
 import { GridLoader } from 'react-spinners';
 
-export default function Page() {
+export default function Page({ name }: { name: string }) {
   const [animeList, setAnimeList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(name ? name : '');
 
-  useEffect(() => {}, [animeList, username]);
-
-  const submitHandler = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!username.length) {
-      return;
+  useEffect(() => {
+    if (username) {
+      setList();
     }
+  }, []);
 
+  const setList = async () => {
     setAnimeList([]);
     setLoading(true);
     const res = await fetch(`/api/list/${username}`, {
@@ -36,6 +35,14 @@ export default function Page() {
     setLoading(false);
   };
 
+  const submitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!username.length) {
+      return;
+    }
+    setList();
+  };
+
   const inputHandler = (e: React.FormEvent<HTMLInputElement>) => {
     let entered = (e.target as HTMLInputElement).value;
     setUsername(entered);
@@ -50,6 +57,7 @@ export default function Page() {
             placeholder="Enter MAL username"
             className=" w-full  lg:w-[300px] bg-gray-50 inline border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500   p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
             onChange={inputHandler}
+            value={username}
           ></input>
           <button
             formAction={'submit'}
