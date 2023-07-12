@@ -67,7 +67,7 @@ export default function Page({ name }: { name: string }) {
           </button>
           {username === 'Invalid Username' && <div>Error Invalid Username</div>}
         </form>
-        {loading && (
+        {loading ? (
           <div className="flex items-center justify-center w-full h-full">
             <GridLoader
               color={'#1f2937'}
@@ -77,10 +77,15 @@ export default function Page({ name }: { name: string }) {
               data-testid="loader"
             />
           </div>
+        ) : (
+          <div className="md:px-10 md:py-10">
+            {animeList.length > 0 ? (
+              <Tier animeList={animeList} />
+            ) : (
+              <div className="bg-gray-800 rounded-md w-1/4 p-6">Nothing Found For: {username}</div>
+            )}
+          </div>
         )}
-        <div className="md:px-10 md:py-10">
-          <Tier animeList={animeList} />
-        </div>
       </div>
     </main>
   );
