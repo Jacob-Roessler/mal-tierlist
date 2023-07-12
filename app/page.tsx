@@ -47,6 +47,7 @@ export default function Page({ name }: { name: string }) {
 
   const inputHandler = (e: React.FormEvent<HTMLInputElement>) => {
     let entered = (e.target as HTMLInputElement).value;
+    setError(false);
     setUsername(entered);
   };
 
