@@ -96,26 +96,27 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                     return (
                       <td
                         key={anime?.node?.id}
-                        className={`group w-auto h-auto bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600  ${
+                        className={`group w-auto h-auto${
                           score == '0' && !showUnscored ? 'hidden' : ''
                         }`}
                       >
                         <a
-                          className="h-full w-auto relative inline text-blue-200 text-xs flex text-center justify-center align-middle content-center  "
+                          className="h-full w-auto relative  text-xs flex text-center justify-center bg-black "
                           href={'https://myanimelist.net/anime/' + anime?.node?.id}
                           target="_blank"
                           rel="noreferrer"
                         >
                           <p
-                            className={`absolute flex h-full items-center invisible group-hover:visible z-5 ${
-                              scale > 20 && 'break-all'
+                            className={`absolute flex h-full items-center text-transparent group-hover:text-blue-200 z-5  ${
+                              scale > 20 && ''
                             }`}
                           >
                             {anime?.node?.title}
-                            {score === '0' && ' - ' + anime?.list_status.status}
+                            {score === '0' &&
+                              ' - ' + anime?.list_status.status.replaceAll('_', ' ')}
                           </p>
                           <img
-                            className="relative inline-block group-hover:opacity-20 z-5"
+                            className="group-hover:opacity-20 z-5"
                             src={anime?.node?.main_picture?.large}
                           ></img>
                         </a>
