@@ -7,6 +7,7 @@ export default function Page({ name }: { name: string }) {
   const [animeList, setAnimeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState(name ? name : '');
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (username) {
@@ -30,6 +31,7 @@ export default function Page({ name }: { name: string }) {
       return;
     }
     const data = await res.json();
+    setError(data.length === 0);
     console.log(data);
     setAnimeList(data);
     setLoading(false);
@@ -79,7 +81,7 @@ export default function Page({ name }: { name: string }) {
           </div>
         ) : (
           <div className="md:px-10 md:py-10">
-            {animeList.length > 0 ? (
+            {!error ? (
               <Tier animeList={animeList} />
             ) : (
               <div className="bg-gray-800 rounded-md w-1/4 p-6">Nothing Found For: {username}</div>
