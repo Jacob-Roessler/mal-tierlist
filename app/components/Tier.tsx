@@ -14,7 +14,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
     return 'grid-cols-' + scale;
   };
   const [showUnscored, setShowUnscored] = useState(false);
-  const [scale, setScale] = useState(window.innerWidth < 800 ? 4 : 18);
+  const [scale, setScale] = useState(window && window.innerWidth < 800 ? 4 : 18);
 
   useEffect(() => {
     console.log(scale);
