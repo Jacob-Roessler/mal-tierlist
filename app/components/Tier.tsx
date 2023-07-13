@@ -98,12 +98,10 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                     return (
                       <td
                         key={anime?.node?.id}
-                        className={`group w-auto h-auto ${
-                          score == '0' && !showUnscored ? 'invisible' : ''
-                        }`}
+                        className={`group   ${score == '0' && !showUnscored ? 'invisible' : ''}`}
                       >
                         <a
-                          className="h-full w-auto relative  text-xs flex text-center justify-center bg-black "
+                          className="h-full w-auto relative  text-xs flex text-center justify-center bg-black"
                           href={'https://myanimelist.net/anime/' + anime?.node?.id}
                           target="_blank"
                           rel="noreferrer"
@@ -118,7 +116,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                               ' - ' + anime?.list_status.status.replaceAll('_', ' ')}
                           </p>
                           <img
-                            className="group-hover:opacity-20 z-5"
+                            className="group-hover:opacity-20 z-5 aspect-[2/3]"
                             src={anime?.node?.main_picture?.large}
                           ></img>
                         </a>
