@@ -14,7 +14,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
     return 'grid-cols-' + scale;
   };
   const [showUnscored, setShowUnscored] = useState(false);
-  const [scale, setScale] = useState(12);
+  const [scale, setScale] = useState(window.innerWidth < 800 ? 4 : 18);
 
   useEffect(() => {
     console.log(scale);
@@ -60,7 +60,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
         <button
           className="w-[55px] h-[55px]   bg-gray-800"
           onClick={(e) => {
-            setScale(Math.min(scale + 1, 30));
+            setScale(Math.min(scale + 1, 32));
           }}
         >
           +
@@ -88,7 +88,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                         className="flex mt-2 bg-blue-700 border border-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
                         onClick={(e) => setShowUnscored(!showUnscored)}
                       >
-                        Show Unscored
+                        {showUnscored ? 'Hide' : 'Show'} Unscored
                       </button>
                     )}
                   </div>
@@ -96,8 +96,8 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                     return (
                       <td
                         key={anime?.node?.id}
-                        className={`group w-auto h-auto${
-                          score == '0' && !showUnscored ? 'hidden' : ''
+                        className={`group w-auto h-auto ${
+                          score == '0' && !showUnscored ? 'invisible' : ''
                         }`}
                       >
                         <a
