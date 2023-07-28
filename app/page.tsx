@@ -58,13 +58,13 @@ export default function Page({ name }: { name: string }) {
         <form onSubmit={submitHandler} className="lg:px-10 my-4 ">
           <input
             placeholder="Enter MAL username"
-            className=" w-full  lg:w-[300px] bg-gray-50 inline border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500   p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
+            className="text-base w-full  md:w-[300px] bg-gray-50 inline border border-gray-300 text-gray-900  focus:ring-blue-500 focus:border-blue-500   p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
             onChange={inputHandler}
             value={username}
           ></input>
           <button
             formAction={'submit'}
-            className="w-full md:w-[120px] block lg:inline text-white bg-blue-700 border border-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-sm w-[120px] px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
+            className="w-full md:w-[120px] block md:inline text-white bg-blue-700 border border-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-base px-1 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
           >
             Get Tierlist
           </button>
