@@ -52,7 +52,7 @@ export default function Page({ name }: { name: string }) {
   };
 
   return (
-    <main className="">
+    <main className="overflow-clip">
       <div className="">
         <h1 className="text-2xl p-5 bg-gray-800">MAL Tierlist</h1>
         <form onSubmit={submitHandler} className="lg:px-10 my-4 ">
