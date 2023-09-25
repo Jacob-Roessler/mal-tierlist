@@ -105,7 +105,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
               className="ml-2 p-2 border-l-gray-700 border-l-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 font-sans"
               onClick={(e) => setShowUnscored(!showUnscored)}
             >
-              {showUnscored ? 'Hiding' : 'Showing'} Unscored
+              {showUnscored ? 'Showing' : 'Hiding'} Unscored
             </button>
           </div>
         </div>
