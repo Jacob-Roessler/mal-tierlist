@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function Tier({ animeList }: { animeList: Object[] }) {
   const [filterType, setFilterType] = useState('all');
+  const [sortBy, setSortBy] = useState('name');
 
   let scores: { [key: string]: any[] } = {};
   animeList.forEach((anime: any) => {
@@ -29,37 +30,11 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
   );
 
   useEffect(() => {
-    console.log(scale);
-    console.log(animeList);
+    console.log('Scale: ' + scale);
   }, [scale]);
 
   return (
     <>
-      <div className="mb-2">
-        <div className={`${!animeList.length && 'hidden'}`}>
-          Format
-          <select
-            id="genre"
-            className=" ml-2 p-2 border-l-gray-700 border-l-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 font-sans"
-            onChange={(e) => setFilterType(e.target.value)}
-          >
-            <option value="all" selected>
-              All
-            </option>
-            <option value="tv">TV</option>
-            <option value="movie">Movie</option>
-            <option value="ova">OVA</option>
-            <option value="ona">ONA</option>
-          </select>
-          <button
-            className="flex mt-2 bg-blue-700 border border-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
-            onClick={(e) => setShowUnscored(!showUnscored)}
-          >
-            {showUnscored ? 'Hide' : 'Show'} Unscored
-          </button>
-        </div>
-      </div>
-
       <div
         className={` ${!animeList.length && 'hidden'} sticky top-0 flex flex-row z-50 bg-slate-800`}
       >
@@ -98,11 +73,42 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
         <button
           className="w-[55px] h-[55px]   bg-gray-800"
           onClick={(e) => {
-            setScale(Math.min(scale + 1, 32));
+            setScale(Math.min(scale + 1, 36));
           }}
         >
           +
         </button>
+        <div className="flex items-center">
+          <div className={`${!animeList.length && 'hidden'}`}>
+            <select
+              id="genre"
+              className="ml-2 p-2 border-l-gray-700 border-l-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 font-sans"
+              onChange={(e) => setFilterType(e.target.value)}
+              defaultValue={'all'}
+            >
+              <option value="all">All</option>
+              <option value="tv">TV</option>
+              <option value="movie">Movie</option>
+              <option value="ova">OVA</option>
+              <option value="ona">ONA</option>
+            </select>
+            <select
+              id="genre"
+              className="ml-2 p-2 border-l-gray-700 border-l-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 font-sans"
+              onChange={(e) => setSortBy(e.target.value)}
+              defaultValue={'name'}
+            >
+              <option value="name">Title</option>
+              <option value="time">Release</option>
+            </select>
+            <button
+              className="ml-2 p-2 border-l-gray-700 border-l-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 font-sans"
+              onClick={(e) => setShowUnscored(!showUnscored)}
+            >
+              {showUnscored ? 'Hiding' : 'Showing'} Unscored
+            </button>
+          </div>
+        </div>
       </div>
       <table className="w-full table-auto">
         <thead>
@@ -125,33 +131,39 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                       : `Not Scored: ${score.replaceAll('_', ' ')}`}{' '}
                     ({scores[score].length})
                   </div>
-                  {scores[score].map((anime, index) => {
-                    return (
-                      <td
-                        key={anime?.node?.id}
-                        className={`group   ${!parseInt(score) && !showUnscored ? 'hidden' : ''}`}
-                      >
-                        <a
-                          className="h-full w-auto relative  text-xs flex text-center justify-center bg-black"
-                          href={'https://myanimelist.net/anime/' + anime?.node?.id}
-                          target="_blank"
-                          rel="noreferrer"
+                  {scores[score]
+                    .toSorted((a, b) =>
+                      sortBy === 'name'
+                        ? a?.node?.title - b?.node?.title
+                        : Date.parse(a?.node?.start_date) - Date.parse(b?.node?.start_date)
+                    )
+                    .map((anime, index) => {
+                      return (
+                        <td
+                          key={anime?.node?.id}
+                          className={`group   ${!parseInt(score) && !showUnscored ? 'hidden' : ''}`}
                         >
-                          <p
-                            className={`absolute flex h-full items-center text-transparent group-hover:text-blue-200 z-5  ${
-                              scale > 20 && ''
-                            }`}
+                          <a
+                            className="h-full w-auto relative  text-xs flex text-center justify-center bg-black"
+                            href={'https://myanimelist.net/anime/' + anime?.node?.id}
+                            target="_blank"
+                            rel="noreferrer"
                           >
-                            {anime?.node?.title}
-                          </p>
-                          <img
-                            className="group-hover:opacity-20 z-5 aspect-[2/3]"
-                            src={anime?.node?.main_picture?.large}
-                          ></img>
-                        </a>
-                      </td>
-                    );
-                  })}
+                            <p
+                              className={`absolute flex h-full items-center text-transparent group-hover:text-blue-200 z-5  ${
+                                scale > 20 && ''
+                              }`}
+                            >
+                              {anime?.node?.title}
+                            </p>
+                            <img
+                              className="group-hover:opacity-20 z-5 aspect-[2/3]"
+                              src={anime?.node?.main_picture?.large}
+                            ></img>
+                          </a>
+                        </td>
+                      );
+                    })}
                 </tr>
               );
             })}

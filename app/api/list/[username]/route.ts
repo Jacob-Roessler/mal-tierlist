@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   const username = request.url.slice(request.url.lastIndexOf('/') + 1);
   let data: Object[] = await fetchData(
     username,
-    `https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status,media_type&limit=1000&nsfw=true`,
+    `https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status{priority,num_times_rewatched,rewatch_value,tags,comments},start_date,end_date,media_type&limit=1000&nsfw=true`,
     []
   );
 
