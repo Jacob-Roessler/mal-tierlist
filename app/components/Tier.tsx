@@ -132,7 +132,7 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                     ({scores[score].length})
                   </div>
                   {scores[score]
-                    .toSorted((a, b) =>
+                    .sort((a, b) =>
                       sortBy === 'name'
                         ? a?.node?.title - b?.node?.title
                         : Date.parse(a?.node?.start_date) - Date.parse(b?.node?.start_date)
