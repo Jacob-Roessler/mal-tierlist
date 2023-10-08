@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 export default function Tier({ animeList }: { animeList: Object[] }) {
   const [filterType, setFilterType] = useState('all');
   const [sortBy, setSortBy] = useState('name');
+  const [mode, setMode] = useState('tierlist');
+  const [search, setSearch] = useState('');
 
   let scores: { [key: string]: any[] } = {};
   animeList.forEach((anime: any) => {
@@ -33,11 +35,25 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
     console.log('Scale: ' + scale);
   }, [scale]);
 
+  useEffect(() => {
+    console.log('Scale: ' + scale);
+  }, [mode]);
+
   return (
     <>
       <div
-        className={` ${!animeList.length && 'hidden'} sticky top-0 flex flex-row z-50 bg-slate-800`}
+        className={` ${
+          !animeList.length && 'hidden'
+        } sticky top-0 flex flex-row flex-wrap z-50 bg-slate-800`}
       >
+        <input
+          className="bg-slate-600 outline-none pl-2 text-xl"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            console.log(search);
+          }}
+        ></input>
         <button
           className="w-[55px] h-[55px] mr-1  bg-gray-800"
           onClick={(e) => {
@@ -107,6 +123,12 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
             >
               {showUnscored ? 'Showing' : 'Hiding'} Unscored
             </button>
+            <button
+              className="ml-2 p-2 border-l-gray-700 border-l-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 font-sans"
+              onClick={(e) => (mode === 'tierlist' ? setMode('timeline') : setMode('tierlist'))}
+            >
+              {mode}
+            </button>
           </div>
         </div>
       </div>
@@ -132,6 +154,8 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
                     ({scores[score].length})
                   </div>
                   {scores[score]
+                    .filter((a) => a?.node?.title.toLowerCase().includes(search))
+
                     .sort((a, b) =>
                       sortBy === 'name'
                         ? a?.node?.title - b?.node?.title
