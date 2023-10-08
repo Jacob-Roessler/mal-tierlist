@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 export default function Tier({ animeList }: { animeList: Object[] }) {
   const [filterType, setFilterType] = useState('all');
   const [sortBy, setSortBy] = useState('name');
-  const [mode, setMode] = useState('tierlist');
   const [search, setSearch] = useState('');
 
   let scores: { [key: string]: any[] } = {};
@@ -30,14 +29,6 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
   const [scale, setScale] = useState(
     typeof window !== 'undefined' && window.innerWidth < 800 ? 4 : 18
   );
-
-  useEffect(() => {
-    console.log('Scale: ' + scale);
-  }, [scale]);
-
-  useEffect(() => {
-    console.log('Scale: ' + scale);
-  }, [mode]);
 
   return (
     <>
@@ -122,12 +113,6 @@ export default function Tier({ animeList }: { animeList: Object[] }) {
               onClick={(e) => setShowUnscored(!showUnscored)}
             >
               {showUnscored ? 'Showing' : 'Hiding'} Unscored
-            </button>
-            <button
-              className="ml-2 p-2 border-l-gray-700 border-l-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 font-sans"
-              onClick={(e) => (mode === 'tierlist' ? setMode('timeline') : setMode('tierlist'))}
-            >
-              {mode}
             </button>
           </div>
         </div>
